@@ -1,0 +1,235 @@
+<!doctype html>
+
+<!-- Coded by C. M. Mitchell
+		-->
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>WorldMap.jpg check 1</title>
+
+		<!-- Stylesheets -->
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.3.0/dist/leaflet.css" />
+		<link rel="stylesheet" type="text/css" href="https://cmmitchell.github.io/Webmap2/Stylesheets/measure_tool.css"/>
+		<link rel="stylesheet" type="text/css" href="https://cmmitchell.github.io/Webmap2/Stylesheets/css.css"/>
+		
+		
+		<!-- Javascript -->
+		<script type="text/javascript" src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/measure_tool.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+		
+		<!-- GeoJSON overlays -->
+		
+		<script type="text/javascript" src="https://cmmitchell.github.io/WorldMap/Shapefiles/USA/USA_Detailed.js"></script>	
+		<script type="text/javascript" src="https://cmmitchell.github.io/WorldMap/Shapefiles/USA/USA_Simplified.js"></script>	
+		<script type="text/javascript" src="https://cmmitchell.github.io/WorldMap/Shapefiles/World/Country_2007.js"></script>
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/Background.js"></script>>
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/Graticule_30.js"></script>
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/Graticule_5.js"></script>
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/Graticule_1.js"></script>
+		
+		
+<!doctype html>
+
+<!-- Coded by C. M. Mitchell
+	 For some unknown reason...
+		-->
+
+		
+	</head>
+		<body>
+	
+		<!-- Fade auomation for text box/legend thing -->
+
+			
+			<script>
+				$(document).ready(function() {
+					$('.legend').delay(1000).fadeOut('normal');
+					$('.img').hover(
+						function() {
+							$('.legend').fadeIn('normal');
+						},
+						function() {
+							$('.legend').fadeOut('normal');
+						}
+					);
+				});
+				
+			</script>
+
+						<!-- Logo or somthing -->
+			</div>
+			
+
+			<div id="map"></div>
+	
+			<script>
+			
+			
+			//calling geo JASON and embeded styles from javascript
+			//=================Background=================
+			
+			
+			
+				var a = L.geoJson(bak, {
+					style: back})
+					
+					//=================Countries=================
+					bUSA1 = L.geoJson(USA_simp, {
+					style: USA_S,
+					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					layer.bindPopup("<b>State:</b> " + feature.properties.STATE_NAME,popupOptions);
+						}
+						})
+					
+					bUSA2 = L.geoJson(USA_Detail, {
+					style: USA_D,
+					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					layer.bindPopup("<b>State:</b> " + feature.properties.STATE_NAME,popupOptions);
+						}
+						})
+				//switch statement to categorically style	
+					//=================Creeks=================
+					c = L.geoJson(World_simp, {
+					style: World_S,
+					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					layer.bindPopup("<b>Country:</b> " + feature.properties.CNTRY_NAME,popupOptions);
+										}
+					})
+					
+					//cdis = L.geoJson(countryDis, {
+					//style: disstyle
+						
+					
+					
+					//})
+				
+					k = L.geoJson(grat, {
+					style: gratst,
+					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
+					//}
+					})
+				
+					k1 = L.geoJson(grat1, {
+					style: gratsty1,
+					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
+					//}
+					})
+				
+					k5 = L.geoJson(grat5, {
+					style: gratsty5,
+					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
+					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
+					//}
+					})
+				//assigning variables to layers for control	
+					//=================background=================
+				var aShp = L.layerGroup([a]),
+					//=================country=================
+					b1Shp = L.layerGroup([bUSA1]),
+					b2Shp = L.layerGroup([bUSA2]),
+					cShp = L.layerGroup([c,a]),
+				    	kShp = L.layerGroup([k]),
+				    	k1Shp = L.layerGroup([k1]),
+				    	k5Shp = L.layerGroup([k5]);
+					//cdisShp = L.layerGroup([cdis])
+			
+					//rivers
+				//background images
+				
+				var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				maxZoom: 19,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				});
+				var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+				});
+				var Roads = L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
+					maxZoom: 17,
+					attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				});
+				
+				var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+				maxZoom: 17,
+				attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+				});
+				
+				var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+				});
+				
+				var Esri_OceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+				maxZoom: 13
+				});
+				
+				var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+					maxZoom: 16
+				});				
+				var CartoDB_DarkMatter = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+					subdomains: 'abcd',
+					maxZoom: 19
+				});				
+				
+				//set map extent, view, and default layer
+				var map = L.map('map', {
+					layers: [bUSA1]
+					}).setView([7.1328, -3.6559], 6.5);
+				//create basemaps variable to call within the control
+				var baseMaps = {
+					"Openstreetmap": OpenStreetMap_Mapnik,
+					"Terrain": OpenTopoMap,
+					"Roads": Roads,
+					"Dark": CartoDB_DarkMatter,
+					"Aerial (ESRI)": Esri_WorldImagery,
+					"GeoMap (ESRI)": Esri_NatGeoWorldMap,
+					"Ocean Base (ESRI)": Esri_OceanBasemap,
+					"Topo Map (ESRI)": Esri_WorldTopoMap,
+					
+					"USA Simplified": b1Shp,
+					"USA Detailed": b2Shp,
+					"World Simplified":cShp,
+				};
+				//create overlays variable to call within the control. Calls layer groups
+				var overLays = {
+					"USA Simplified": b1Shp,
+					"USA Detailed": b2Shp,
+					"World Simplified":cShp,
+					//"Alt":cdisShp,
+					"30":kShp,
+					"5":k1Shp,
+					"1":k5Shp
+				};
+				//add control to map
+				L.control.layers(baseMaps, overLays).addTo(map);
+				
+				//Check this and associated scripts for errors. Displays tool, but not tool icon.  Error is likely in the script.
+				var measureControl = new L.Control.Measure(
+					{
+						position: 'topright',
+						primaryLengthUnit: 'meters',
+						activeColor: '#ABE67E'
+					}
+				);
+				measureControl.addTo(map);
+				
+				L.control.scale({maxWidth: 150}).addTo(map);
+				
+	
+				
+				L.map('map', {
+        			zoomDelta: 0.15,
+       				zoomSnap: 0
+    				});
+			
+			
+			</script>
+			
+		</body>
