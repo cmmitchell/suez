@@ -77,66 +77,10 @@
 				var a = L.geoJson(bak, {
 					style: back})
 					
-					//=================Countries=================
-					bUSA1 = L.geoJson(USA_simp, {
-					style: USA_S,
-					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					layer.bindPopup("<b>State:</b> " + feature.properties.STATE_NAME,popupOptions);
-						}
-						})
-					
-					bUSA2 = L.geoJson(USA_Detail, {
-					style: USA_D,
-					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					layer.bindPopup("<b>State:</b> " + feature.properties.STATE_NAME,popupOptions);
-						}
-						})
-				//switch statement to categorically style	
-					//=================Creeks=================
-					c = L.geoJson(World_simp, {
-					style: World_S,
-					onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					layer.bindPopup("<b>Country:</b> " + feature.properties.CNTRY_NAME,popupOptions);
-										}
-					})
-					
-					//cdis = L.geoJson(countryDis, {
-					//style: disstyle
-						
-					
-					
-					//})
-				
-					k = L.geoJson(grat, {
-					style: gratst,
-					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
-					//}
-					})
-				
-					k1 = L.geoJson(grat1, {
-					style: gratsty1,
-					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
-					//}
-					})
-				
-					k5 = L.geoJson(grat5, {
-					style: gratsty5,
-					//onEachFeature: function (feature, layer){popupOptions = {color: "#5D6D7E", maxWidth: 250};
-					//layer.bindPopup("<b>degrees:</b> " + feature.properties.degrees,popupOptions);
-					//}
-					})
+
 				//assigning variables to layers for control	
 					//=================background=================
-				var aShp = L.layerGroup([a]),
-					//=================country=================
-					b1Shp = L.layerGroup([bUSA1]),
-					b2Shp = L.layerGroup([bUSA2]),
-					cShp = L.layerGroup([c,a]),
-				    	kShp = L.layerGroup([k]),
-				    	k1Shp = L.layerGroup([k1]),
-				    	k5Shp = L.layerGroup([k5]);
+				var aShp = L.layerGroup([a]);
 					//cdisShp = L.layerGroup([cdis])
 			
 					//rivers
@@ -192,16 +136,10 @@
 					"GeoMap (ESRI)": Esri_NatGeoWorldMap,
 					"Ocean Base (ESRI)": Esri_OceanBasemap,
 					"Topo Map (ESRI)": Esri_WorldTopoMap,
-					
-					"USA Simplified": b1Shp,
-					"USA Detailed": b2Shp,
-					"World Simplified":cShp,
+
 				};
 				//create overlays variable to call within the control. Calls layer groups
 				var overLays = {
-					"USA Simplified": b1Shp,
-					"USA Detailed": b2Shp,
-					"World Simplified":cShp,
 					//"Alt":cdisShp,
 					"30":kShp,
 					"5":k1Shp,
