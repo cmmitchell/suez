@@ -87,9 +87,14 @@
 					style: roadcol
 					
 					})
+					d = L.geoJson(water, {
+					style: LakeStyle
+					
+					})
 				var aShp = L.layerGroup([a]),
 					bShp = L.layerGroup([b]),
-				    	cShp = L.layerGroup([c]);
+				    	cShp = L.layerGroup([c]),
+				    	dShp = L.layerGroup([d]);
 				
 				var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
@@ -152,7 +157,8 @@
 							layers    : { 
 								"Ad1":aShp,
 								"Ad2":bShp,
-								"Roads":cShp
+								"Roads":cShp,
+								"Water":dShp
 							}	
 						 }							 
 				];
