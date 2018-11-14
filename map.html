@@ -124,20 +124,7 @@
 				];	
 				//create overlays variable to call within the control. Calls layer groups
 				
-				var overlays = [
-						 {
-							groupName : "Layers",
-							expanded  : true,
-							layers    : { 
-								"Parcel (Interactive)":bShp,
-								"Parcel Outline":b2Shp,
-								"Parcel Neighbors":dShp,
-								"Point (Interactive)":aShp,
-								"Road":cShp,
-								"Dash Road":c2Shp
-							}	
-						 }							 
-				];
+
 				//================================================
 				
 				
@@ -152,7 +139,7 @@
 		//this is a seperating line ----------------------------------------------------------------------------------
 				
 				//add control to map
-				var control = L.Control.styledLayerControl(baseMaps, overlays, options);
+				var control = L.Control.styledLayerControl(baseMaps, options);
 				map.addControl(control);
 				
 				L.control.scale({maxWidth: 150}).addTo(map);
