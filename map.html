@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Map.jpg 2</title>
+		<title>Map.jpg 2sfd</title>
 		
 		<!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
@@ -74,13 +74,7 @@
 				maxZoom: 19,
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 				});
-				var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-					attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-				});
-				var Roads = L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
-					maxZoom: 17,
-					attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-				});
+
 				
 				var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 				maxZoom: 17,
@@ -91,62 +85,81 @@
 				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
 				});
 				
-				var Esri_OceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
-				attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
-				maxZoom: 13
+				var Esri_WorldImagery = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 				});
 				
-				var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
-					attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-					maxZoom: 16
-				});				
-				var CartoDB_DarkMatter = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
-					attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-					subdomains: 'abcd',
-					maxZoom: 19
-				});				
+				var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+				});
+				
+				var BING_KEY = 'AnoeM3MMiLwsSc-goBaMU7setahLtvnyjZJrSomUejOJVJU33az0Il4UvyMML5rK'
+				var bingLayer = L.tileLayer.bing(BING_KEY, {
+				maxZoom: 20
+				});			
 				
 				//set map extent, view, and default layer
 				var map = L.map('map', {
-					layers: []
+					layers: [],
+					zoomDelta: 0.15,
+					zoomSnap: 0
 					}).setView([29.945769, 32.544290], 6.5);
 				
 				//create basemaps variable to call within the control
-				var baseMaps = {
-					"Openstreetmap": OpenStreetMap_Mapnik,
-					"Terrain": OpenTopoMap,
-					"Roads": Roads,
-					"Dark": CartoDB_DarkMatter,
-					"Aerial (ESRI)": Esri_WorldImagery,
-					"GeoMap (ESRI)": Esri_NatGeoWorldMap,
-					"Ocean Base (ESRI)": Esri_OceanBasemap,
-					"Topo Map (ESRI)": Esri_WorldTopoMap,
-
-				};
-				//create overlays variable to call within the control. Calls layer groups
-
-				//add control to map
-				L.control.layers(baseMaps).addTo(map);
 				
-				//Check this and associated scripts for errors. Displays tool, but not tool icon.  Error is likely in the script.
-				var measureControl = new L.Control.Measure(
-					{
-						position: 'topright',
-						primaryLengthUnit: 'meters',
-						activeColor: '#ABE67E'
-					}
-				);
-				measureControl.addTo(map);
+				
+				var baseMaps = [
+						{ 
+							groupName : "Background",
+							expanded : true,
+							layers    : {
+								
+								"Openstreetmap": OpenStreetMap_Mapnik,
+								"ESRI World Imagery": Esri_WorldImagery,
+								"ESRI World Street Map": Esri_WorldStreetMap,
+								"Bing Imagery": bingLayer
+							}
+					
+						}							
+				];	
+				//create overlays variable to call within the control. Calls layer groups
+				
+				var overlays = [
+						 {
+							groupName : "Layers",
+							expanded  : true,
+							layers    : { 
+								"Parcel (Interactive)":bShp,
+								"Parcel Outline":b2Shp,
+								"Parcel Neighbors":dShp,
+								"Point (Interactive)":aShp,
+								"Road":cShp,
+								"Dash Road":c2Shp
+							}	
+						 }							 
+				];
+				//================================================
+				
+				
+				var options = {
+					container_width 	: "180px",
+					group_maxHeight     : "200px",
+					//container_maxHeight : "350px", 
+					exclusive       	: false,
+					collapsed : true, 
+					position: 'topright'
+				};
+		//this is a seperating line ----------------------------------------------------------------------------------
+				
+				//add control to map
+				var control = L.Control.styledLayerControl(baseMaps, overlays, options);
+				map.addControl(control);
 				
 				L.control.scale({maxWidth: 150}).addTo(map);
+				L.control.fullscreen().addTo(map);
 				
 	
-				
-				L.map('map', {
-        			zoomDelta: 0.15,
-       				zoomSnap: 0
-    				});
-			
+
 			
 			</script>
 			
