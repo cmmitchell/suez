@@ -139,14 +139,9 @@
 
 				};
 				//create overlays variable to call within the control. Calls layer groups
-				var overLays = {
-					//"Alt":cdisShp,
-					"30":kShp,
-					"5":k1Shp,
-					"1":k5Shp
-				};
+
 				//add control to map
-				L.control.layers(baseMaps, overLays).addTo(map);
+				L.control.layers(baseMaps).addTo(map);
 				
 				//Check this and associated scripts for errors. Displays tool, but not tool icon.  Error is likely in the script.
 				var measureControl = new L.Control.Measure(
