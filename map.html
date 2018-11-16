@@ -91,10 +91,22 @@
 					style: LakeStyle
 					
 					})
+				
+					e = L.geoJson(ad1, {
+					style: polycol3
+					
+					})
+				
+					f = L.geoJson(ad2, {
+					style: polycol3
+					
+					})
 				var aShp = L.layerGroup([a]),
 					bShp = L.layerGroup([b]),
 				    	cShp = L.layerGroup([c]),
-				    	dShp = L.layerGroup([d]);
+				    	dShp = L.layerGroup([d]),
+				    	eShp = L.layerGroup([e]),
+					fShp = L.layerGroup([f]);
 				
 				var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 19,
@@ -143,7 +155,9 @@
 								"Openstreetmap": OpenStreetMap_Mapnik,
 								"ESRI World Imagery": Esri_WorldImagery,
 								"ESRI World Street Map": Esri_WorldStreetMap,
-								"Bing Imagery": bingLayer
+								"Bing Imagery": bingLayer,
+								"Ad_1":eShp,
+								"Ad_2":fShp
 							}
 					
 						}							
