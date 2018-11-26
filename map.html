@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>SuezMap.jpg v4</title>
+		<title>SuezMap.jpg v4.1</title>
 		
 		<!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
@@ -30,7 +30,7 @@
 		<script type="text/javascript" src="https://cmmitchell.github.io/suez/egyptShp/admin_2.js"></script>
 		<script type="text/javascript" src="https://cmmitchell.github.io/suez/egyptShp/eg_roads.js"></script>
 		<script type="text/javascript" src="https://cmmitchell.github.io/suez/egyptShp/egwater.js"></script>
-		
+		<script type="text/javascript" src="https://cmmitchell.github.io/Webmap2/Java/gjson/Background.js"></script>
 		
 <!doctype html>
 
@@ -101,11 +101,15 @@
 					style: polycol3
 					
 					})
+					
+					g = L.geoJson(bak, {
+					style: back})
 				var aShp = L.layerGroup([a]),
 					bShp = L.layerGroup([b]),
 				    	cShp = L.layerGroup([c]),
 				    	dShp = L.layerGroup([d]),
 				    	eShp = L.layerGroup([e]),
+				    	gShp = L.layerGroup([g]),
 					fShp = L.layerGroup([f]);
 				
 				var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -156,6 +160,7 @@
 								"ESRI World Imagery": Esri_WorldImagery,
 								"ESRI World Street Map": Esri_WorldStreetMap,
 								"Bing Imagery": bingLayer,
+								"WAT":gShp,
 								"Ad_1":eShp,
 								"Ad_2":fShp
 							}
